@@ -24,7 +24,7 @@ func main() {
 	r.Use(cors.New(cors.Config{
 		AllowOrigins: []string{
 			"http://localhost:3000",
-			"https://cookeasy-frontend-22sf1xw9x-rahulkumars-projects-54f77606.vercel.app",
+			"https://cookeasy-frontend.vercel.app",
 		},
 		AllowMethods: []string{
 			"GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS",
