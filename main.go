@@ -22,10 +22,23 @@ func main() {
 	r := gin.Default()
 
 	r.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"http://localhost:3000", "https://cookeasy-frontend-22sf1xw9x-rahulkumars-projects-54f77606.vercel.app"}, // frontend URL
-		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
-		AllowHeaders:     []string{"Origin", "Content-Type"},
-		AllowCredentials: true, // VERY IMPORTANT for cookies
+		AllowOrigins: []string{
+			"http://localhost:3000",
+			"https://cookeasy-frontend-22sf1xw9x-rahulkumars-projects-54f77606.vercel.app",
+		},
+		AllowMethods: []string{
+			"GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS",
+		},
+		AllowHeaders: []string{
+			"Origin",
+			"Content-Type",
+			"Authorization",
+			"Accept",
+		},
+		ExposeHeaders: []string{
+			"Content-Length",
+		},
+		AllowCredentials: true,
 		MaxAge:           12 * time.Hour,
 	}))
 

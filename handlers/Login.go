@@ -60,14 +60,16 @@ func (h *Handler) Login(c *gin.Context) {
 		return
 	}
 
+	c.SetSameSite(http.SameSiteNoneMode)
+
 	c.SetCookie(
 		"auth_token",
 		token,
 		3600*24, // 1 day
 		"/",
-		"localhost", // change in prod
-		false,       // secure (true in prod https)
-		true,        // httpOnly
+		"",   // change in local to (localhost) and in prod to your domain
+		true, // secure (true in prod https)
+		true, // httpOnly
 	)
 
 	c.JSON(http.StatusOK, gin.H{
