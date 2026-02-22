@@ -1,0 +1,26 @@
+name: Run Production Migrations
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: production-migrations
+  cancel-in-progress: false
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install migrate CLI
+        run: |
+          curl -L https://github.com/golang-migrate/migrate/releases/latest/download/migrate.linux-amd64.tar.gz | tar xvz
+          sudo mv migrate /usr/local/bin/
+
+      - name: Run migrations
+        run: migrate -path db/migrations -database "${{ secrets.DATABASE_URL }}" up

@@ -6,7 +6,7 @@ DB_HOST := localhost
 DB_PORT := 5432
 DB_NAME := cookeasy
 
-DB_URL := postgres://$(DB_USER):$(DB_PASSWORD)@$(DB_HOST):$(DB_PORT)/$(DB_NAME)?sslmode=disable
+DB_URL ?= postgres://$(DB_USER):$(DB_PASSWORD)@$(DB_HOST):$(DB_PORT)/$(DB_NAME)?sslmode=disable
 
 MIGRATIONS_PATH := db/migrations
 
