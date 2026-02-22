@@ -21,7 +21,7 @@ func main() {
 	r := gin.Default()
 
 	r.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"http://localhost:3000", "https://cookeasy-frontend-22sf1xw9x-rahulkumars-projects-54f77606.vercel.app/"}, // frontend URL
+		AllowOrigins:     []string{"http://localhost:3000", "https://cookeasy-frontend-22sf1xw9x-rahulkumars-projects-54f77606.vercel.app"}, // frontend URL
 		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowHeaders:     []string{"Origin", "Content-Type"},
 		AllowCredentials: true, // VERY IMPORTANT for cookies
@@ -32,7 +32,9 @@ func main() {
 		apperror.RegisterTags(v)
 	}
 
-	db, err := sql.Open("postgres", "postgres://postgres:secret@localhost:5432/cookeasy?sslmode=disable")
+	dbURL := os.Getenv("DATABASE_URL")
+
+	db, err := sql.Open("postgres", dbURL)
 	if err != nil {
 		slog.Error("Failed to connect to database", "error", err)
 	}
@@ -54,5 +56,10 @@ func main() {
 
 	r.GET("/profile", auth.AuthMiddleware, handler.GetUser)
 
-	r.Run(":3001")
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "3001"
+	}
+
+	r.Run(":" + port)
 }
